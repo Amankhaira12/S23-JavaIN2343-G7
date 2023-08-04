@@ -1,0 +1,53 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class BirdGame extends JFrame {
+    private final int WINDOW_WIDTH = 800;
+    private final int WINDOW_HEIGHT = 600;
+    private final int BIRD_SIZE = 40;
+    private final int BREAD_SIZE = 20;
+    private final int BUCKET_WIDTH = 80;
+    private final int BUCKET_HEIGHT = 100;
+    private final int HAPPY_POINTS_PER_BREAD = 10;
+
+    private List<Point> birds;
+    private Point breadPosition;
+    private Point bucketPosition;
+    private int happyPoints;
+
+    public BirdGame() {
+        setTitle("Bird Game");
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        birds = new ArrayList<>();
+        breadPosition = new Point(-100, -100); // initialize bread off-screen
+        bucketPosition = new Point(WINDOW_WIDTH / 2 - BUCKET_WIDTH / 2, WINDOW_HEIGHT - BUCKET_HEIGHT);
+        happyPoints = 0;
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                breadPosition.setLocation(e.getX() - BREAD_SIZE / 2, e.getY() - BREAD_SIZE / 2);
+            }
+        });
+
+        // Add birds randomly
+        spawnBirds(5);
+
+        Timer timer = new Timer(100, e -> {
+            moveBirds();
+            checkCollisions();
+            repaint();
+        });
+        timer.start();
+    }
+
+    private void spawnBirds(int count) {
+        Random rand = new Random();
+        for (int i = 0; i < count; i++)
