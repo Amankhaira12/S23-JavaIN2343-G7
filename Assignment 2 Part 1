@@ -1,0 +1,50 @@
+import java.util.*;
+
+class Car {
+    // ... (unchanged)
+}
+
+class TrafficLight {
+    // ... (unchanged)
+}
+
+public class IntersectionSimulator {
+    private static final int SIMULATION_TIME_SECONDS = 10;
+
+    public static void main(String[] args) {
+        // ... (unchanged)
+
+        // Track car movements for generating the report
+        Map<String, Map<String, Integer>> reportData = new HashMap<>();
+        String[] directions = {"N", "S", "E", "W"};
+        String[] colors = {"Red", "Green", "Yellow", "Blue", "Pink"};
+
+        for (String direction : directions) {
+            Map<String, Integer> colorCount = new HashMap<>();
+            for (String color : colors) {
+                colorCount.put(color, 0);
+            }
+            reportData.put(direction, colorCount);
+        }
+
+        // ... (unchanged)
+
+        // Simulate the intersection for a fixed number of seconds
+        for (int time = 0; time < SIMULATION_TIME_SECONDS; time++) {
+            // ... (unchanged)
+        }
+
+        // ... (unchanged)
+
+        // Generate and display the report
+        System.out.println("\n---------- Report ----------");
+        for (String direction : directions) {
+            System.out.println("Direction: " + direction);
+            for (String color : colors) {
+                int count = reportData.get(direction).get(color);
+                System.out.println("Color " + color + ": " + count + " cars");
+            }
+            System.out.println("------------------");
+        }
+    }
+}
